@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Cliente</title>
+</head>
+<body>
+    <h1>Pesquisar Cliente</h1>
+    <form id="searchForm" method="POST" action="/pesquisarCliente">
+        <input type="text" name="cpfOrName" id="cpfOrName" placeholder="Digite CPF ou Nome" required>
+        <button type="submit">Pesquisar</button>
+    </form>
+    <!-- Verifica se a mensagem está presente e a exibe -->
+    <div th:if="${mensagem}" th:text="${mensagem}" style="color: red;"></div>
+</body>
+</html>
