@@ -31,9 +31,8 @@ public class FuncionarioEntity {
     public String endereco;
     public String telefone;
     public String cpf;
-    public Time horarioEntrada;
-    public Time horarioSaida;
-    public Date dataPagamento;
+    public String horario_entrada;
+    public String horario_saida;
     public String funcao;
     
 

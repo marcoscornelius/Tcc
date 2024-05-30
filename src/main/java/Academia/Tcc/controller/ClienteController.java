@@ -1,8 +1,10 @@
 package Academia.Tcc.controller;
 
+import Academia.Tcc.controller.model.Cliente;
 import Academia.Tcc.data.ClienteEntity;
 import Academia.Tcc.service.ClienteService;
 import java.util.Collections;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,8 @@ public class ClienteController {
     @Autowired 
 
     ClienteService clienteService; 
-
+       
     @PostMapping("/cadastrarCliente") 
-
     public ResponseEntity<ClienteEntity> addFilme(@RequestBody ClienteEntity cli) { 
 
         var novoCliente = clienteService.criarCliente(cli); 
@@ -45,9 +46,6 @@ public class ClienteController {
        return new ResponseEntity<>(HttpStatus.OK);
    }   
   
-
-   
-
    
     @PostMapping("/atualizarCliente")
     @ResponseBody

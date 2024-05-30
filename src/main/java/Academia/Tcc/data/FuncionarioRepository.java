@@ -5,11 +5,16 @@
 package Academia.Tcc.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author User
  */
+@Repository
 public interface FuncionarioRepository extends JpaRepository<FuncionarioEntity, Integer> {
-    
+    @Query("SELECT f FROM FuncionarioEntity f WHERE f.cpf = :cpfOrName OR f.nome = :cpfOrName")
+    FuncionarioEntity findByCpfOrNome(@Param("cpfOrName") String cpfOrName);
 }

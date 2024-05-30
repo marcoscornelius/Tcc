@@ -1,7 +1,5 @@
 package Academia.Tcc.controller.model;
 
-import java.sql.Time;
-import java.util.Date;
 
 public class Funcionario {
     public Integer id;
@@ -9,9 +7,8 @@ public class Funcionario {
     public String endereco;
     public String telefone;
     public String cpf;
-    public Time horarioEntrada;
-    public Time horarioSaida;
-    public Date dataPagamento;
+    public String horario_entrada;
+    public String horario_saida;
     public String funcao;
 
     public Funcionario() {
@@ -57,28 +54,20 @@ public class Funcionario {
         this.cpf = cpf;
     }
 
-    public Time getHorarioEntrada() {
-        return horarioEntrada;
+    public String getHorarioEntrada() {
+        return horario_entrada;
     }
 
-    public void setHorarioEntrada(Time horarioEntrada) {
-        this.horarioEntrada = horarioEntrada;
+    public void setHorarioEntrada(String horarioEntrada) {
+        this.horario_entrada = horarioEntrada;
     }
 
-    public Time getHorarioSaida() {
-        return horarioSaida;
+    public String getHorarioSaida() {
+        return horario_saida;
     }
 
-    public void setHorarioSaida(Time horarioSaida) {
-        this.horarioSaida = horarioSaida;
-    }
-
-    public Date getDataPagamento() {
-        return dataPagamento;
-    }
-
-    public void setDataPagamento(Date dataPagamento) {
-        this.dataPagamento = dataPagamento;
+    public void setHorarioSaida(String horarioSaida) {
+        this.horario_saida = horarioSaida;
     }
 
     public String getFuncao() {

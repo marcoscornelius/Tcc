@@ -1,27 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Academia.Tcc.service;
 
 import Academia.Tcc.data.FuncionarioEntity;
 import Academia.Tcc.data.FuncionarioRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author User
  */
+@Service
 public class FuncionarioService {
     @Autowired 
 
     FuncionarioRepository funcionarioRepository; 
     
-    public void deletarFuncionario(Integer funcId) { 
+    public void deletarFuncionario(String cpfOrName) { 
 
-        FuncionarioEntity func = getFuncionarioId(funcId); 
-
+        FuncionarioEntity func = getFuncionarioCpfOrName(cpfOrName); 
+        
         funcionarioRepository.deleteById(func.getId()); 
 
     } 
@@ -38,31 +37,19 @@ public class FuncionarioService {
 
     } 
     
-    public FuncionarioEntity atualizarFilme(Integer funcId, FuncionarioEntity funcionarioRequest) { 
+    public FuncionarioEntity atualizarFuncionario(FuncionarioEntity funcionarioRequest) { 
 
-        FuncionarioEntity func = getFuncionarioId(funcId); 
+     
 
-        func.setCpf(funcionarioRequest.getCpf()); 
+        funcionarioRepository.save(funcionarioRequest); 
 
-        func.setDataPagamento(funcionarioRequest.getDataPagamento()); 
-
-        func.setHorarioSaida(funcionarioRequest.getHorarioSaida()); 
-
-        func.setEndereco(funcionarioRequest.getEndereco()); 
-
-        func.setHorarioEntrada(funcionarioRequest.getHorarioEntrada()); 
-        
-        func.setNome(funcionarioRequest.getNome()); 
-           
-        func.setTelefone(funcionarioRequest.getTelefone()); 
-        
-        func.setFuncao(funcionarioRequest.getFuncao()); 
-
-        funcionarioRepository.save(func); 
-
-        return func; 
+        return funcionarioRequest; 
 
     } 
+    
+    public FuncionarioEntity getFuncionarioCpfOrName(String cpfOrName) {
+        return funcionarioRepository.findByCpfOrNome(cpfOrName);
+    }
 
     public FuncionarioEntity criarFuncionario(FuncionarioEntity func) { 
 
