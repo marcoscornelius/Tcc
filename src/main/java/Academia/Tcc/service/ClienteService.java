@@ -35,6 +35,10 @@ public class ClienteService {
 
     } 
     
+    public ClienteEntity getClienteCpfOrNomeExcluindoId(String cpfOrName, Integer id) {
+        return clienteRepository.findByCpfOrNomeExcludingId(cpfOrName, id);
+    }
+    
    public ClienteEntity getClienteCpfOrName(String cpfOrName) {
         return clienteRepository.findByCpfOrNome(cpfOrName);
     }

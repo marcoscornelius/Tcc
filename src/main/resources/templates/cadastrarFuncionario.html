@@ -141,9 +141,14 @@
                         data: JSON.stringify(formData),
                         success: function(response) {
                             alert('Funcionário cadastrado com sucesso!');
+                            window.location.href = '/paginaInicial';
                         },
-                        error: function(xhr, status, error) {
-                            alert('Erro ao cadastrar funcionário: ' + error);
+                       error: function(xhr, status, error) {
+                            if (xhr.status === 409) { // Verifica se o status é 409 (CONFLICT)
+                                alert(xhr.responseText); // Exibe a mensagem de erro retornada pelo servidor
+                            } else {
+                                alert('Erro ao atualizar funcionario: ' + error);
+                            }
                         }
                     });
                 }

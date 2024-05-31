@@ -60,7 +60,7 @@
                 endereco: {
                     required: true,
                     maxlength: 100,
-                    pattern: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/
+                    pattern: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s,.-]+$/
                 },
                 telefone: {
                     required: true,
@@ -96,7 +96,7 @@
                 endereco: {
                     required: "Por favor, insira o endereço.",
                     maxlength: "O endereço pode ter no máximo 100 caracteres.",
-                    pattern: "O endereço não pode conter números ou caracteres especiais."
+                    pattern: "O endereço pode conter apenas letras, números, espaços e os caracteres ',.-'."
                 },
                 telefone: {
                     required: "Por favor, insira o telefone.",
@@ -138,10 +138,15 @@
                     data: JSON.stringify(formData),
                     success: function(response) {
                         alert('Cliente cadastrado com sucesso!');
+                        window.location.href = '/paginaInicial';
                     },
                     error: function(xhr, status, error) {
-                        alert('Erro ao cadastrar cliente: ' + error);
-                    }
+                            if (xhr.status === 409) { // Verifica se o status é 409 (CONFLICT)
+                                alert(xhr.responseText); // Exibe a mensagem de erro retornada pelo servidor
+                            } else {
+                                alert('Erro ao atualizar cliente: ' + error);
+                            }
+                        }
                 });
             }
         });

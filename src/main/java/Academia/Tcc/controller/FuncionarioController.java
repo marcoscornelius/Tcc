@@ -32,14 +32,19 @@ public class FuncionarioController {
 
     FuncionarioService funcionarioService; 
     
-    @PostMapping("/cadastrarFuncionario") 
-    public ResponseEntity<FuncionarioEntity> addFuncionario(@RequestBody FuncionarioEntity fun) { 
-
-        var novoFuncionario = funcionarioService.criarFuncionario(fun); 
-
-        return new ResponseEntity<>(novoFuncionario, HttpStatus.CREATED); 
-
-    }     
+   @PostMapping("/cadastrarFuncionario")
+public ResponseEntity<String> addFuncionario(@RequestBody FuncionarioEntity fun) {
+    FuncionarioEntity funcionario = funcionarioService.getFuncionarioCpfOrName(fun.getCpf());
+    if (funcionario != null) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um funcionário com este CPF.");
+    }
+    funcionario = funcionarioService.getFuncionarioCpfOrName(fun.getNome());
+    if (funcionario != null) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um funcionário com este nome.");
+    }
+    FuncionarioEntity novoFuncionario = funcionarioService.criarFuncionario(fun);
+    return ResponseEntity.status(HttpStatus.CREATED).body("Funcionário Criado.");
+}   
    
     @DeleteMapping("/deletar")
    public ResponseEntity deletarFuncionario(@RequestParam String cpf) {   
@@ -48,12 +53,22 @@ public class FuncionarioController {
    }   
   
    
-    @PostMapping("/atualizarFuncionario")
-    @ResponseBody
-    public ResponseEntity<?> atualizarFuncionario(@RequestBody FuncionarioEntity funcionario) {
-        funcionarioService.atualizarFuncionario(funcionario);
-        return new ResponseEntity<>(Collections.singletonMap("success", true), HttpStatus.OK);
+   @PostMapping("/atualizarFuncionario")
+@ResponseBody
+public ResponseEntity<?> atualizarFuncionario(@RequestBody FuncionarioEntity funcionario) {
+    FuncionarioEntity funcionarioExistentePorCpf = funcionarioService.getFuncionarioCpfOrNomeExcluindoId(funcionario.getCpf(), funcionario.getId());
+    if (funcionarioExistentePorCpf != null) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um funcionário com este CPF.");
     }
+
+    FuncionarioEntity funcionarioExistentePorNome = funcionarioService.getFuncionarioCpfOrNomeExcluindoId(funcionario.getNome(), funcionario.getId());
+    if (funcionarioExistentePorNome != null) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um funcionário com este nome.");
+    }
+
+    funcionarioService.atualizarFuncionario(funcionario);
+    return new ResponseEntity<>(Collections.singletonMap("success", true), HttpStatus.OK);
+}
 
     
 }

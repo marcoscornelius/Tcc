@@ -32,11 +32,17 @@ public class ClienteController {
     ClienteService clienteService; 
        
     @PostMapping("/cadastrarCliente") 
-    public ResponseEntity<ClienteEntity> addFilme(@RequestBody ClienteEntity cli) { 
-
-        var novoCliente = clienteService.criarCliente(cli); 
-
-        return new ResponseEntity<>(novoCliente, HttpStatus.CREATED); 
+    public ResponseEntity<String> addCliente(@RequestBody ClienteEntity cli) { 
+        ClienteEntity cliente = clienteService.getClienteCpfOrName(cli.getCpf());
+        if (cliente != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cliente com este CPF.");
+        }
+        cliente = clienteService.getClienteCpfOrName(cli.getNome());
+        if (cliente != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cliente com este nome.");
+        }
+        ClienteEntity novoCliente = clienteService.criarCliente(cli);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente Criado.");
 
     }     
    
@@ -47,12 +53,22 @@ public class ClienteController {
    }   
   
    
-    @PostMapping("/atualizarCliente")
-    @ResponseBody
-    public ResponseEntity<?> atualizarCliente(@RequestBody ClienteEntity cliente) {
-        clienteService.atualizarCliente(cliente);
-        return new ResponseEntity<>(Collections.singletonMap("success", true), HttpStatus.OK);
+ @PostMapping("/atualizarCliente")
+@ResponseBody
+public ResponseEntity<?> atualizarCliente(@RequestBody ClienteEntity cliente) {
+    ClienteEntity clienteExistentePorCpf = clienteService.getClienteCpfOrNomeExcluindoId(cliente.getCpf(), cliente.getId());
+    if (clienteExistentePorCpf != null) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cliente com este CPF.");
     }
+
+    ClienteEntity clienteExistentePorNome = clienteService.getClienteCpfOrNomeExcluindoId(cliente.getNome(), cliente.getId());
+    if (clienteExistentePorNome != null) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cliente com este nome.");
+    }
+
+    clienteService.atualizarCliente(cliente);
+    return new ResponseEntity<>(Collections.singletonMap("success", true), HttpStatus.OK);
+}
 
     @GetMapping("/{id}")
     @ResponseBody

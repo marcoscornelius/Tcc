@@ -17,4 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface FuncionarioRepository extends JpaRepository<FuncionarioEntity, Integer> {
     @Query("SELECT f FROM FuncionarioEntity f WHERE f.cpf = :cpfOrName OR f.nome = :cpfOrName")
     FuncionarioEntity findByCpfOrNome(@Param("cpfOrName") String cpfOrName);
+    
+      @Query("SELECT f FROM FuncionarioEntity f WHERE (f.cpf = :cpfOrName OR f.nome = :cpfOrName) AND f.id != :id")
+    FuncionarioEntity findByCpfOrNomeExcludingId(@Param("cpfOrName") String cpfOrName, @Param("id") Integer id);
 }

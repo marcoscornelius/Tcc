@@ -25,6 +25,10 @@ public class FuncionarioService {
 
     } 
     
+     public FuncionarioEntity getFuncionarioCpfOrNomeExcluindoId(String cpfOrName, Integer id) {
+        return funcionarioRepository.findByCpfOrNomeExcludingId(cpfOrName, id);
+    }
+    
     public List<FuncionarioEntity> listarTodosFuncionarios() { 
 
         return funcionarioRepository.findAll(); 

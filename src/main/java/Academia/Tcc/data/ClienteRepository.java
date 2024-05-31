@@ -19,4 +19,11 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>
     
     @Query("SELECT c FROM ClienteEntity c WHERE c.cpf = :cpfOrName OR c.nome = :cpfOrName")
     ClienteEntity findByCpfOrNome(@Param("cpfOrName") String cpfOrName);
+    
+    @Query("SELECT c FROM ClienteEntity c WHERE (c.cpf = :cpfOrName OR c.nome = :cpfOrName) AND c.id != :id")
+    ClienteEntity findByCpfOrNomeExcludingId(@Param("cpfOrName") String cpfOrName, @Param("id") Integer id);
 }
+
+    
+   
+
