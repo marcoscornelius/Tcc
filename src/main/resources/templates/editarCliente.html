@@ -70,6 +70,10 @@
                         maxlength: 20,
                         digits: true
                     },
+                    duracao: {
+                    maxlength: 3,
+                    digits: true
+                    },
                     cpf: {
                         required: true,
                         minlength: 11,
@@ -77,11 +81,9 @@
                         digits: true
                     },
                     horario_entrada: {
-                        required: true,
                         pattern: /^\d{2}:\d{2}$/
                     },
                     data_pagamento: {
-                        required: true,
                         pattern: /^\d{2}\/\d{2}\/\d{4}$/
                     }
                 },
@@ -90,6 +92,10 @@
                         required: "Por favor, insira o nome.",
                         maxlength: "O nome pode ter no máximo 50 caracteres.",
                         pattern: "O nome não pode conter números ou caracteres especiais."
+                    },
+                    duracao: {
+                        maxlength: "A duração pode ter no máximo 3 caracteres.",
+                        digits: "A duração deve conter apenas números."
                     },
                     endereco: {
                         required: "Por favor, insira o endereço.",
