@@ -8,6 +8,7 @@ Tecnologias que serão aplicadas:
 Java
 Netbeans Ide
 Banco de dados SQL
+MySQL Workbench
 
 Time de desenvolvedores:
 Marcos Cornelius
@@ -17,10 +18,12 @@ Projeto destinado a cumprir os requisitos do projeto integrador, baseado na nece
 
 Funcionalidades do sistema:
 Cadastrar cliente
+Buscar cliente por cpf/nome
 Editar cliente
 Deletar cliente
 Lista de clientes
 Cadastrar funcionario
+Buscar funcionario por cpf/nome
 Editar funcionario
 Deletar funcionario
 Lista de funcionarios
