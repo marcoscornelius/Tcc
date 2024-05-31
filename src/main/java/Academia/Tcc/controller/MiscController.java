@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MiscController {
       @Autowired 
     ClienteService clienteService;  
+      @Autowired
     FuncionarioService funcionarioService;    
     
   @PostMapping("/pesquisarCliente")
@@ -83,12 +84,12 @@ public String getClienteByCpfOrName(@RequestParam String cpfOrName, Model model)
     }
 }
 
-  @GetMapping("/listarFuncionario") 
+  @GetMapping("/listarFuncionarios") 
     public String todosFuncionario(Model model) { 
 
         var funcionarios = funcionarioService.listarTodosFuncionarios(); 
         model.addAttribute("funcionario", funcionarios);
-        return "listarFuncionario"; 
+        return "listarFuncionarios"; 
 
     } 
     

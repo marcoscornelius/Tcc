@@ -13,7 +13,7 @@
     <div th:insert="navbar.html :: nav"></div>
 <div class="container">
     <h1>Editar Funcionario</h1>
-    <form id="editForm" th:object="${cliente}" th:action="@{/cliente/atualizarCliente}" method="post">
+    <form id="editForm" th:object="${funcionario}" th:action="@{/funcionario/atualizarFuncionario}" method="post">
         <input type="hidden" th:field="*{id}">
         <div class="form-group">
             <label for="nome">Nome:</label>
@@ -46,7 +46,7 @@
         <button type="submit" class="btn btn-primary">Atualizar</button>      
         <input type="text" id="cpf2" style="display: none" class="form-control" th:field="*{cpf}">
     </form>
-      <button id="deleteButton" class="btn btn-danger">Deletar Cliente</button>
+      <button id="deleteButton" class="btn btn-danger">Deletar Funcionario</button>
 </div>
     <script>
       document.getElementById("deleteButton").addEventListener("click", function() {
@@ -58,15 +58,15 @@
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error("Erro ao excluir cliente");
+                throw new Error("Erro ao excluir funcionario");
             }
         })
         .then(data => {
-            console.log("Cliente excluído com sucesso:", data);
-            // Faça o que for necessário após excluir o cliente
+            console.log("Funcionario excluído com sucesso:", data);
+            // Faça o que for necessário após excluir o funcionario
         })
         .catch(error => {
-            console.error("Erro ao excluir cliente:", error);
+            console.error("Erro ao excluir funcionario:", error);
             // Trate o erro adequadamente
         });
     });
@@ -83,7 +83,7 @@
             });
 
             // Envia os dados do formulário como JSON para o servidor usando fetch
-            fetch("/funcionario/atualizarCliente", {
+            fetch("/funcionario/atualizarFuncionario", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

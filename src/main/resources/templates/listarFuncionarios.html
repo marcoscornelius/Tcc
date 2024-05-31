@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar Clientes</title>
+    <title>Listar Funcionarios</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
@@ -11,7 +11,7 @@
 <body>
 <div th:insert="navbar.html :: nav"></div>
 <div class="container">
-    <h1>Listar Clientes</h1>
+    <h1>Listar Funcionarios</h1>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -19,28 +19,27 @@
                 <th>Endereço</th>
                 <th>Telefone</th>
                 <th>CPF</th>
-                <th>Duração</th>
                 <th>Horário de Entrada</th>
                 <th>Horário de Saída</th>
-                <th>Função<th>
+                <th>Função</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="cliente : ${cliente}">
-                <td th:text="${cliente.nome}"></td>
-                <td th:text="${cliente.endereco}"></td>
-                <td th:text="${cliente.telefone}"></td>
-                <td th:text="${cliente.cpf}"></td>
-                <td th:text="${cliente.duracao}"></td>
-                <td th:text="${cliente.horario_entrada}"></td>
-                <td th:text="${cliente.horario_saida}"></td>
-                <td th:text="${cliente.funcao}"></td>
+            <tr th:each="funcionario : ${funcionario}">
+                <td th:text="${funcionario.nome}"></td>
+                <td th:text="${funcionario.endereco}"></td>
+                <td th:text="${funcionario.telefone}"></td>
+                <td th:text="${funcionario.cpf}"></td>
+                <td th:text="${funcionario.horario_entrada}"></td>
+                <td th:text="${funcionario.horario_saida}"></td>
+                <td th:text="${funcionario.funcao}"></td>
                 <td>
-                   <button class="btn btn-primary" th:attr="onclick='editarCliente(\'' + ${cliente.cpf} + '\')'">Editar</button>
-        <button class="btn btn-danger" th:attr="onclick='deletarCliente(\'' + ${cliente.cpf} + '\')'">Deletar</button>
-    </td>
-
+                    <form id="searchForm" method="POST" action="/pesquisarFuncionario">
+                    <input th:value="${funcionario.cpf}" type="text" style="display: none"  name="cpfOrName" id="cpfOrName">
+                    <button class="btn btn-primary" type="submit">Editar</button>
+                    </form>
+                    <button class="btn btn-danger" th:attr="onclick='deletarFuncionario(\'' + ${funcionario.cpf} + '\')'">Deletar</button>
                 </td>
             </tr>
         </tbody>
@@ -48,9 +47,9 @@
 </div>
 
 <script>
-    function deletarCliente(cpf) {
-        if (confirm('Tem certeza que deseja deletar este cliente?')) {
-            fetch("/cliente/deletar?cpf=" + cpf, {
+    function deletarFuncionario(cpf) {
+        if (confirm('Tem certeza que deseja deletar este funcionario?')) {
+            fetch("/funcionario/deletar?cpf=" + cpf, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,45 +57,35 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert('Cliente deletado com sucesso');
-                    location.reload(); // Recarregar a página para atualizar a lista de clientes
+                    alert('Funcionario deletado com sucesso');
+                    location.reload(); // Recarregar a página para atualizar a lista de funcionarios
                 } else {
-                    throw new Error("Erro ao excluir cliente");
+                    throw new Error("Erro ao excluir funcionario");
                 }
             })
             .catch(error => {
                 console.error('Erro:', error);
-                alert('Erro ao excluir cliente');
+                alert('Erro ao excluir funcionario');
             });
         }
     }
 
-    function editarCliente(cpf) {
-        // Redirecionar para a rota de pesquisa para buscar o cliente pelo CPF
-        fetch("/pesquisarCliente?cpfOrName=" + cpf, {
+    function editarFuncionario(cpf) {
+        // Redirecionar para a rota de pesquisa para buscar o funcionario pelo CPF
+        fetch("/pesquisarFuncionario?cpfOrName=" + cpf, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = `/pesquisarCliente?cpfOrName=${cpf}`;
-            } else {
-                throw new Error("Erro ao redirecionar para editar cliente");
-            }
-        })
         .catch(error => {
             console.error('Erro:', error);
-            alert('Erro ao redirecionar para editar cliente');
+            alert('Erro ao redirecionar para editar funcionario');
         });
     }
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLa08sAn1oG/+Q751hA4GHR75paRTvTs3bOz"
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"

@@ -35,8 +35,11 @@
                 <td th:text="${cliente.horario_entrada}"></td>
                 <td th:text="${cliente.data_pagamento}"></td>
                 <td>
-                   <button class="btn btn-primary" th:attr="onclick='editarCliente(\'' + ${cliente.cpf} + '\')'">Editar</button>
-        <button class="btn btn-danger" th:attr="onclick='deletarCliente(\'' + ${cliente.cpf} + '\')'">Deletar</button>
+                    <form id="searchForm" method="POST" action="/pesquisarCliente">
+                        <input th:value="${cliente.cpf}" type="text" style="display: none"  name="cpfOrName" id="cpfOrName">
+                        <button class="btn btn-primary" type="submit">Editar</button>
+                    </form>
+                    <button class="btn btn-danger" th:attr="onclick='deletarCliente(\'' + ${cliente.cpf} + '\')'">Deletar</button>
     </td>
 
                 </td>
